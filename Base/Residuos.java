@@ -6,6 +6,7 @@ import Herederos.Inorganico;
 import Herederos.Peligrosos;
 import Herederos.Electronicos;
 import Herederos.Reciclables;
+import Herederos.NoAprovechables;
 
 public class Residuos {
     int VidaUtil;
@@ -77,11 +78,41 @@ public static Residuos CrearObjeto(int opcion){
         boolean combustible = input.nextBoolean();
         input.close();
         return new Inorganico(VidaUtil, Nombre, "Inorganico", Peso, destino, fechaDeRecoleccion, combustible);
-    } else {
+    }
+    else if (opcion == 3) {
+        System.out.println(" Ingrese el indice de peligrosidad de el residuo peligroso :");
+        int nivelPeligrosidad = input.nextInt();
+        if (nivelPeligrosidad < 0) {
+            System.out.println("El nivel de peligrosidad no puede ser negativo.");
+            input.close();
+            return null;
+        }
+        input.close();
+        return new Peligrosos(VidaUtil, Nombre, "Peligroso", Peso, destino, fechaDeRecoleccion, nivelPeligrosidad);
+    }
+    else if (opcion == 4) {
+        System.out.println(" Ingrese la razon por la cual el residuo no es aprovechable :");
+        String razonNoAprovechable = input.next();
+        input.close();
+        return new NoAprovechables(VidaUtil, Nombre, "No Aprovechable", Peso, destino, fechaDeRecoleccion, razonNoAprovechable);
+    }
+    else if (opcion == 5) {
+        System.out.println(" Ingrese si el residuo electronico necesita tratamiento especial (true/false):");
+        boolean necesitaTratamientoEspecial = input.nextBoolean();
+        input.close();
+        return new Electronicos(VidaUtil, Nombre, "Electronico", Peso, destino, fechaDeRecoleccion, necesitaTratamientoEspecial);
+    }
+    else if (opcion == 6) {
+        System.out.println(" Ingrese el tipo de material del residuo reciclable:");
+        String tipoMaterial = input.next();
+        input.close();
+        return new Reciclables(VidaUtil, Nombre, "Reciclable", Peso, destino, fechaDeRecoleccion, tipoMaterial);
+    }
+    else {
         System.out.println("Opcion no valida.");
         input.close();
         return null;
         
     }
-    }
+}
 }

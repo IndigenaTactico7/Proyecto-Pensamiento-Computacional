@@ -1,8 +1,9 @@
 package Herederos;
 import Base.Residuos;
 public class Electronicos extends Residuos {
-Boolean peligro;
-public Electronicos (String nombre, String tipo, Boolean peligro){
-    
-    this.peligro = peligro;
+Boolean NecesitaTratamientoEspecial;
+public Electronicos (int VidaUtil, String Nombre, String Tipo, double Peso, String destino, String fechaDeRecoleccion, Boolean NecesitaTratamientoEspecial){
+    super(VidaUtil, Nombre, Tipo, Peso, destino, fechaDeRecoleccion);
+    this.NecesitaTratamientoEspecial = NecesitaTratamientoEspecial;
+}
 }
