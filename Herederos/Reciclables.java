@@ -9,7 +9,7 @@ public class Reciclables extends Residuos {
         super(VidaUtil, Nombre, Tipo, Peso, destino, fechaDeRecoleccion);
         this.tipoDeMaterial = tipoDeMaterial;
     }
-
+    
     @Override
     public void ImprimirInfoDelResiduo() {
         super.ImprimirInfoDelResiduo();

@@ -6,4 +6,9 @@ public Organico (int VidaUtil, String Nombre, String Tipo, double Peso, String d
     super(VidaUtil, Nombre, Tipo, Peso, destino, fechaDeRecoleccion);
     this.nivelBiodegradacion = nivelBiodegradacion;
 }
+@Override
+    public void ImprimirInfoDelResiduo() {
+        super.ImprimirInfoDelResiduo();
+        System.out.println("Su nivel de biodegradacion es de: " + nivelBiodegradacion); 
+    }
 }

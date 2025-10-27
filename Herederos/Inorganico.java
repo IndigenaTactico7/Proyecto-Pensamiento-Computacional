@@ -7,5 +7,9 @@ public class Inorganico extends Residuos {
         super(VidaUtil, Nombre, Tipo, Peso, destino, fechaDeRecoleccion);
         this.Combustible = Combustible;
     }
-    
+    @Override
+    public void ImprimirInfoDelResiduo() {
+        super.ImprimirInfoDelResiduo();
+        System.out.println("¿El residuo es inflamable?: " + Combustible); 
+    }
 }

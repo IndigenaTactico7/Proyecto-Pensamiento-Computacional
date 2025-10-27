@@ -6,5 +6,10 @@ public class NoAprovechables extends Residuos   {
         super(VidaUtil, Nombre, Tipo, Peso, destino, fechaDeRecoleccion);
         this.razonNoAprovechable = razonNoAprovechable;
     }
+    @Override
+    public void ImprimirInfoDelResiduo() {
+        super.ImprimirInfoDelResiduo();
+        System.out.println("La razon por la que no es aprovechable es: " + razonNoAprovechable); 
+    }
     
 }

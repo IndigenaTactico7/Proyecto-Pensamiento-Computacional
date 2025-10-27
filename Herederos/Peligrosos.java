@@ -6,4 +6,9 @@ public class Peligrosos extends Residuos {
         super(VidaUtil, Nombre, Tipo, Peso, destino, fechaDeRecoleccion);
         this.nivelPeligrosidad = nivelPeligrosidad;
     }
+    @Override
+    public void ImprimirInfoDelResiduo() {
+        super.ImprimirInfoDelResiduo();
+        System.out.println("El nivel de peligrosidad es de : " + nivelPeligrosidad); 
+    }
 }
