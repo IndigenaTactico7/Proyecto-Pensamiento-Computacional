@@ -27,29 +27,45 @@ public class Main {
             int opcion = input.nextInt();
             input.nextLine();  
             Residuos residuo = Residuos.CrearObjeto(opcion, input);
+
+            if (residuo != null) {
+                System.out.println("\nEl residuo '" + residuo.getNombre() + "' ha sido clasificado correctamente como " + residuo.getTipo());
+            } else {
+                System.out.println("\nError en la clasificación. El residuo no se registró.");
+            }
         }
         else if (opcionMenu == 2) {
             System.out.println("Lista de todos los residuos clasificados:(" + Residuos.listaDeResiduos.size() + ")");
-            for (Residuos residuo : Residuos.listaDeResiduos) {
-                System.out.println("-----");
-                residuo.ImprimirInfoDelResiduo();
-            }
+
             if (Residuos.listaDeResiduos.isEmpty()) {
-            System.out.println("\n--- No hay residuos registrados. ---");
+                System.out.println("\n--- No hay residuos registrados. ---");
             }
-        else {
-            System.out.println("Opcion no valida.");
+            else {
+                for (Residuos residuo : Residuos.listaDeResiduos) {
+                    System.out.println("-----");
+                    residuo.ImprimirInfoDelResiduo();
+                }
+            }
         }
+        else if (opcionMenu == 3) {
+                System.out.println("Gracias por usar el programa de clasificacion de residuos");
+                break;
+            }
+
+        else {
+                System.out.println("Opción no válida.");
+            }
 
         System.out.println("Desea seguir usando el programa?, Ingrese Si o No");
         Iniciar = input.nextLine();
+        
         if (Iniciar.equalsIgnoreCase("NO")){
             System.out.println("Gracias por usar el programa de clasificacion de residuos");
             break;
         }
         
     }
-    } while (true);
-        input.close();
+     while (true);
+    input.close();
     }
 }

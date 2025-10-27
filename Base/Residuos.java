@@ -12,8 +12,8 @@ import Herederos.NoAprovechables;
 public class Residuos {
     public static ArrayList<Residuos> listaDeResiduos = new ArrayList<>();
     int VidaUtil;
-    String Tipo;
-    String Nombre;
+    protected String Tipo;
+    protected String Nombre;
     double Peso;
     String destino;
     String fechaDeRecoleccion;
@@ -123,5 +123,12 @@ public static Residuos CrearObjeto(int opcion, Scanner input){
         
     }   
 }
+//Metodos Get 
+public String getTipo(){
+        return Tipo;
+    }
+    public String getNombre(){
+        return Nombre;
+    }
 }
 
