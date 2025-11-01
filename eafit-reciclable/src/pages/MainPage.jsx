@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from "react";
+
 import Card from '../components/Card'
 import CardMaterial from '../components/CardMaterial'
+import ModalCreateMaterial from '../components/ModalCreateMaterial'
 
 let datos = [{
   "nombre":"botella pet",
@@ -28,17 +30,17 @@ let datos = [{
 ]
 
 
-
 export default function MainPage() {
+    const [showModal, setShowModal] = useState(false)
+
     return (
         <>
-            <div className='container mainBackground'>
-
+            <div className='container '>
                 <h1><i class="bi bi-recycle text-success" ></i> Bienvenido al gestor de materiales</h1>
                 <p className='text-secondary fw-light fs-3'>Administra tus materiales </p>
                 <div className='row row-cols-2 row-cols-md-3 justify-content-between'>
-                    <div className='col mt-3'>
-                        <Card />
+                    <div className='col mt-3' onClick={()=>setShowModal(true)}>
+                        <Card/>
                     </div>
 
                     {datos.map((i) => (
@@ -48,10 +50,11 @@ export default function MainPage() {
 
                     ))}
 
-
                 </div>
 
             </div>
+                    <ModalCreateMaterial isOpen={showModal} onClose={(()=>setShowModal(false))}/>
+ 
         </>
     )
 }
