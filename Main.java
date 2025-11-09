@@ -11,7 +11,10 @@ public class Main {
 
         System.out.println("1. Clasificar un residuo");
         System.out.println("2. Mostrar todos los residuos");
-        System.out.println("3. Hacer algo:\n");
+        System.out.println("3. Realizar un informe");
+        System.out.println("4. Buscar un residuo");
+        System.out.println("5. Actualizar estado o destino del residuo");
+        System.out.println("6. Salir del programa\n");
 
         int opcionMenu = input.nextInt(); 
         input.nextLine();
@@ -38,16 +41,25 @@ public class Main {
             System.out.println("Lista de todos los residuos clasificados:(" + Residuos.listaDeResiduos.size() + ")");
 
             if (Residuos.listaDeResiduos.isEmpty()) {
-                System.out.println("\n--- No hay residuos registrados. ---");
+                System.out.println("\n No hay residuos registrados ");
             }
             else {
                 for (Residuos residuo : Residuos.listaDeResiduos) {
-                    System.out.println("-----");
+                    System.out.println("");
                     residuo.ImprimirInfoDelResiduo();
                 }
             }
         }
-        else if (opcionMenu == 3) {
+        else if(opcionMenu == 3){
+            Residuos.generarInforme();
+        }
+        else if(opcionMenu == 4){
+            Residuos.buscarResiduo(input);
+        }
+        else if (opcionMenu == 5) {
+            Residuos.actualizarResiduo(input);
+            }
+        else if (opcionMenu == 6) {
                 System.out.println("Gracias por usar el programa de clasificacion de residuos");
                 break;
             }
