@@ -1,0 +1,22 @@
+###peticion get
+get http://localhost:8080/residuo
+
+
+###peticion post - verificar un usuario
+Post http://localhost:8080/residuo
+Content-Type: application/json
+
+{
+    "estado":"sapohp",
+    "tipo":"peligroso",
+    "nombre":"jairo",
+    "destino":"Rusia",
+    "fechaDeRecoleccion":"2025-04-04",
+    "peso": 59,
+    "vidaUtil": 2,
+    "nivelPeligrosidad":2 
+}
+// nivelPeligrosidad es opcional ya que este es de la clase peligroso
+
+
+
