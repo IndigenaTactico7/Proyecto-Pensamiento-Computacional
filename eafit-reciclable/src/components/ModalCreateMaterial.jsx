@@ -127,7 +127,6 @@ export default function ModalCreateMaterial({ isOpen, onClose, children }) {
                             </div> : ""
                     }
 
-
                     <label className='form-label'>Estado</label>
                     <select name="" id="" className='form-control' {...register("estado")}>
                         <option value="Limpio">Limpio</option>
@@ -136,7 +135,7 @@ export default function ModalCreateMaterial({ isOpen, onClose, children }) {
                     {errors.estado ? <p className='text-start text-danger mt-1'>Es obligatorio seleccionar el estado</p> : ""}
 
                     <label className='form-label'>Peso</label>
-                    <input type="number" className='form-control' {...register("peso", { required: "true" })} />
+                    <input type="number" className='form-control' step={0.01} {...register("peso", { required: "true" })} />
                     {errors.peso ? <p className='text-start text-danger mt-1'>Es obligatorio ingresar el peso</p> : ""}
 
                     <label className='form-label'>Destino</label>

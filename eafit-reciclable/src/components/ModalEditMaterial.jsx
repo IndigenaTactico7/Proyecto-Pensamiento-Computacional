@@ -9,7 +9,7 @@ import { usePeticiones } from '../context/PeticionesContext';
 export default function ModalEditMaterial({ isOpen, onClose }) {
     let { register, handleSubmit, formState: { errors }, unregister, setValue, reset } = useForm()
     let [tipo, setTipo] = useState("electronico")
-    let {getData,getPromedios,getPorcentajes} = usePeticiones()
+    let { getData, getPromedios, getPorcentajes } = usePeticiones()
     let { idCard, formInfo } = useModals()
 
     if (!isOpen) return null;
@@ -81,7 +81,7 @@ export default function ModalEditMaterial({ isOpen, onClose }) {
                     {errors.nombre ? <p className='text-start text-danger mt-1'>Es obligatorio escribir el nombre del residuo</p> : ""}
 
                     <label className='form-label'>Tipo de residuo</label>
-                    <select className='form-control'  defaultValue={formInfo.tipo} {...register("tipo", { onChange: (e) => { setTipo(e.target.value); unregister("datoAdicional"); setValue("datoAdicional", "") } })}>
+                    <select className='form-control' defaultValue={formInfo.tipo} {...register("tipo", { onChange: (e) => { setTipo(e.target.value); unregister("datoAdicional"); setValue("datoAdicional", "") } })}>
                         <option value="electronico">Electronicos</option>
                         <option value="inorganico">Inorganicos</option>
                         <option value="noAprovechable">No aprovechable</option>
@@ -141,7 +141,7 @@ export default function ModalEditMaterial({ isOpen, onClose }) {
                     {errors.estado ? <p className='text-start text-danger mt-1'>Es obligatorio seleccionar el estado</p> : ""}
 
                     <label className='form-label'>Peso</label>
-                    <input type="number" className='form-control'defaultValue={formInfo.peso} {...register("peso", { required: "true" })} />
+                    <input type="number" className='form-control' defaultValue={formInfo.peso} step={0.01} {...register("peso", { required: "true" })} />
                     {errors.peso ? <p className='text-start text-danger mt-1'>Es obligatorio ingresar el peso</p> : ""}
 
                     <label className='form-label'>Destino</label>
