@@ -1,41 +1,46 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import Card from '../components/Card'
 import CardMaterial from '../components/CardMaterial'
 import ModalCreateMaterial from '../components/ModalCreateMaterial'
 import axios from "axios";
-
+import ModalDeleteMaterial from "../components/ModalDeleteMaterial";
+import { useModals } from "../context/ModalsContext";
+import ModalEditMaterial from "../components/ModalEditMaterial";
 
 export default function MainPage() {
-    const [showModal, setShowModal] = useState(false)
-let [datos,setDatos] = useState([])
 
-let getDatos = async () => {
-try{
-    let response = await axios.get("http://localhost:8080/residuo")
-    setDatos(response.data)
-}
-catch(error){
-    console.log(error.message);
-}
-}
+    let [datos, setDatos] = useState([])
+    let { showModalCreate, setShowModalCreate, showModalDelete, setShowModalDelete , showModalEdit, setShowModalEdit} = useModals()
 
-useEffect(()=>{
-    getDatos()
-},[showModal])
+
+    let getDatos = async () => {
+        try {
+            let response = await axios.get("http://localhost:8080/residuo")
+            setDatos(response.data)
+            console.log(response.data);
+        }
+        catch (error) {
+            console.log(error.message);
+        }
+    }
+
+    useEffect(() => {
+        getDatos()
+    }, [showModalCreate])
     return (
         <>
             <div className='container '>
-                <h1><i class="bi bi-recycle text-success" ></i> Bienvenido al gestor de materiales</h1>
+                <h1><i className="bi bi-recycle text-success" ></i> Bienvenido al gestor de materiales</h1>
                 <p className='text-secondary fw-light fs-3'>Administra tus materiales </p>
                 <div className='row row-cols-2 row-cols-md-3'>
-                    <div className='col mt-3' onClick={()=>setShowModal(true)}>
-                        <Card/>
+                    <div className='col mt-3' onClick={() => setShowModalCreate(true)}>
+                        <Card />
                     </div>
 
-                    {datos.map((dato,i) => (
+                    {datos.map((dato, i) => (
                         <div className='col mt-3' key={i}>
-                            <CardMaterial dato={dato}/>
+                            <CardMaterial dato={dato} id={i} />
                         </div>
 
                     ))}
@@ -43,8 +48,10 @@ useEffect(()=>{
                 </div>
 
             </div>
-                    <ModalCreateMaterial isOpen={showModal} onClose={(()=>setShowModal(false))}/>
- 
+            <ModalCreateMaterial isOpen={showModalCreate} onClose={(() => setShowModalCreate(false))} />
+            <ModalDeleteMaterial isOpen={showModalDelete} onClose={(() => setShowModalDelete(false))} />
+                <ModalEditMaterial isOpen={showModalEdit} onClose={(()=>setShowModalEdit(false))}/>
+
         </>
     )
 }

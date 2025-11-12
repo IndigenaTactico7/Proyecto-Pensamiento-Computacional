@@ -17,8 +17,6 @@ public class Controller {
     @PostMapping
     public ResponseEntity<?> guardar(@RequestBody Residuos residuos) throws Exception {
         try {
-            System.out.println(residuos);
-            System.out.println("El bich");
             return ResponseEntity.status(HttpStatus.OK).body(Residuo.guardar(residuos));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -30,6 +28,30 @@ public class Controller {
             return ResponseEntity.status(HttpStatus.OK).body(Residuo.consultar());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+    @GetMapping("/promedio")
+    public ResponseEntity<?> promedios() throws Exception {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(Residuo.promedios());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+    @DeleteMapping("/{idEliminar}")
+    public ResponseEntity<?> eliminar(@PathVariable int idEliminar) throws Exception{
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(Residuo.eliminarResido(idEliminar));
+        }catch (Exception error){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error.getMessage());
+        }
+    }
+    @PutMapping("/{idEditar}")
+    public ResponseEntity<?> editar(@RequestBody Residuos residuos, @PathVariable int idEditar) throws Exception{
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(Residuo.editar(residuos,idEditar));
+        }catch (Exception error){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error.getMessage());
         }
     }
 

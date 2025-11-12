@@ -1,15 +1,31 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import MainPage from './pages/MainPage';
+import axios from 'axios';
 import '../src/App.css'
-import CreateMaterial from './pages/CreateMaterial';
-import ModalCreateMaterial from './components/ModalCreateMaterial';
+import ModalsProvider from './context/ModalsContext';
 
 
 function App() {
  
+  let promedios = async ()=>{
+    try{
+      let response = await axios.get("http://localhost:8080/residuo/promedio")
+      console.log(response.data);
+    }catch(error){
+      console.log(error.message);
+    }
+  }
+
+  useEffect(()=>{
+    promedios()
+  },[])
+
   return (
     <>
-    <MainPage/>
+    <ModalsProvider>
+       <MainPage/>
+    </ModalsProvider>
+   
     </>
   )
 }

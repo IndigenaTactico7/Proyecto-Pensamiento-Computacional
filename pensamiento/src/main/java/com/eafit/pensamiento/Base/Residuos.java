@@ -3,7 +3,12 @@ package com.eafit.pensamiento.Base;
 import com.eafit.pensamiento.Herederos.*;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 @JsonTypeInfo(
@@ -46,17 +51,79 @@ public class Residuos {
         listaDeResiduos.add(residuos);
     }
 
+    public static HashMap<String,Double> devolverPromedio(){
+        HashMap<String,Double> promedios = new HashMap<String,Double>();
+        double electronico = 0;
+        double inorganico = 0;
+        double noAprovechable = 0;
+        double organico = 0;
+        double peligroso = 0;
+        double reciclable = 0;
+        int contElectronico = 0,contInorganico = 0,contNoAprov = 0,contOrganico = 0,contPeligroso =0,contReciclable = 0;
+        for (Residuos residuos:listaDeResiduos)
+        {
+            if (residuos.getTipo().equals("electronico")){
+                electronico+=residuos.getPeso();
+                contElectronico++;
+            }else if(residuos.getTipo().equals("inorganico")){
+                electronico+=residuos.getPeso();
+                contInorganico++;
+            }else if(residuos.getTipo().equals("noAprovechable")){
+                electronico+=residuos.getPeso();
+                contNoAprov++;
+            }else if(residuos.getTipo().equals("organico")){
+                electronico+=residuos.getPeso();
+                contOrganico++;
+            }else if(residuos.getTipo().equals("peligroso")){
+                electronico+=residuos.getPeso();
+                contPeligroso++;
+            }else if(residuos.getTipo().equals("reciclable")){
+                electronico+=residuos.getPeso();
+                contReciclable++;
+            }
+        }
+
+        promedios.put("electronico",electronico/contElectronico);
+        promedios.put("inorganico",inorganico/contInorganico);
+        promedios.put("noAprovechable",noAprovechable/contNoAprov);
+        promedios.put("organico",organico/contOrganico);
+        promedios.put("peligroso",peligroso/contPeligroso);
+        promedios.put("reciclable",reciclable/contReciclable);
+
+        return promedios;
+    }
+
+
+
     public static ArrayList<Residuos> consultar() {
+
         return listaDeResiduos;
+    }
+
+    public static boolean eliminarResiduo(int idResiduo) throws Exception{
+        try{
+            listaDeResiduos.remove(idResiduo);
+            return true;
+        }catch (Exception error){
+            throw new Exception(error.getMessage());
+        }
+
+    }
+    public static void editarResiduo(Residuos residuo, int idResiduo) throws Exception{
+        try{
+            listaDeResiduos.set(idResiduo,residuo);
+        }catch (Exception error){
+            throw  new Exception(error.getMessage());
+        }
     }
 
     public static void guardarReporte( /*Para esta parte de aca si se uso chat gpt para saber como crear el archivo de txt en java*/
             int total, int reciclados, int reutilizados, int eliminados,
             double porcReciclado, double porcReutilizado, double porcEliminado,
-            java.util.HashMap<String, Double> pesoPorTipo, java.util.HashMap<String, Integer> cantidadPorTipo) {
+            HashMap<String, Double> pesoPorTipo, HashMap<String, Integer> cantidadPorTipo) {
 
-        try (java.io.PrintWriter writer = new java.io.PrintWriter(new java.io.FileWriter("reporte_residuos.txt", true))) {
-            writer.println("Reporte generado el " + java.time.LocalDate.now());
+        try (PrintWriter writer = new PrintWriter(new FileWriter("reporte_residuos.txt", true))) {
+            writer.println("Reporte generado el " + LocalDate.now());
             writer.println("Total residuos recolectados: " + total);
             writer.printf("Reciclados: %.2f%% (%d)\n", porcReciclado, reciclados);
             writer.printf("Reutilizados: %.2f%% (%d)\n", porcReutilizado, reutilizados);

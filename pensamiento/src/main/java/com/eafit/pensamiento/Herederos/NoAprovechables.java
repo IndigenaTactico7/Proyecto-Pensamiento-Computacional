@@ -5,11 +5,10 @@ import com.eafit.pensamiento.Base.Residuos;
 public class NoAprovechables extends Residuos {
     String razonNoAprovechable;
 
-    public NoAprovechables(){
+    public NoAprovechables() {
         super.setTipo("noAprovechable");
 
     }
-
     public String getRazonNoAprovechable() {
         return razonNoAprovechable;
     }

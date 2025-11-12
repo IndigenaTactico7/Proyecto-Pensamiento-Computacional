@@ -1,14 +1,19 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom';
+import { useModals } from '../context/ModalsContext';
 
-export default function ModalCreateMaterial({ isOpen, onClose, children }) {
+export default function ModalEditMaterial({ isOpen, onClose }) {
     let { register, handleSubmit, formState: { errors }, unregister, setValue, reset } = useForm()
     let [tipo, setTipo] = useState("electronico")
+
+    let { idCard, formInfo } = useModals()
+    console.log(formInfo);
+
     if (!isOpen) return null;
 
-    let CreateMaterial = async (e) => {
+    let editMaterial = async (e, id) => {
         let nuevoMaterial = {
             "estado": e.estado,
             "tipo": e.tipo,
@@ -43,7 +48,7 @@ export default function ModalCreateMaterial({ isOpen, onClose, children }) {
         }
         console.log(nuevoMaterial);
         try {
-            let response = await axios.post("http://localhost:8080/residuo", nuevoMaterial, {
+            let response = await axios.put(`http://localhost:8080/residuo/${id}`, nuevoMaterial, {
                 headers: {
                     "Content-Type": "application/json"
                 }
@@ -58,20 +63,21 @@ export default function ModalCreateMaterial({ isOpen, onClose, children }) {
     }
 
 
+
     return (
         <>
             <div className='position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50' style={{ zIndex: "100" }} onClick={onClose}>
 
             </div>
             <div className='position-fixed top-50 start-50 bg-white translate-middle p-4 rounded-4 ' style={{ zIndex: "1001", "width": "500px" }}>
-                <form onSubmit={handleSubmit((e) => CreateMaterial(e))}>
-                    <h2>Crear un material</h2>
-                    <label className='form-label'>Nombre del material</label>
-                    <input type="text" className='form-control' {...register("nombre", { required: "true" })} />
-                    {errors.nombre ? <p className='text-start text-danger mt-1'>Es obligatorio escribir el nombre del material</p> : ""}
+                <form onSubmit={handleSubmit((e) => editMaterial(e, idCard))}>
+                    <h2>Editar residuo</h2>
+                    <label className='form-label'>Nombre del residuo</label>
+                    <input type="text" className='form-control' defaultValue={formInfo.nombre} {...register("nombre", { required: "true" })} />
+                    {errors.nombre ? <p className='text-start text-danger mt-1'>Es obligatorio escribir el nombre del residuo</p> : ""}
 
                     <label className='form-label'>Tipo de residuo</label>
-                    <select className='form-control' {...register("tipo", { onChange: (e) => { setTipo(e.target.value); unregister("datoAdicional"); setValue("datoAdicional", "") } })}>
+                    <select className='form-control'  defaultValue={formInfo.tipo} {...register("tipo", { onChange: (e) => { setTipo(e.target.value); unregister("datoAdicional"); setValue("datoAdicional", "") } })}>
                         <option value="electronico">Electronicos</option>
                         <option value="inorganico">Inorganicos</option>
                         <option value="noAprovechable">No aprovechable</option>
@@ -82,14 +88,14 @@ export default function ModalCreateMaterial({ isOpen, onClose, children }) {
                     {errors.tipo ? <p className='text-start text-danger mt-1'>Es obligatorio seleccionar el tipo de residuo</p> : ""}
 
                     <label className='form-label'>Fecha de recolección</label>
-                    <input type="date" className='form-control' {...register("fecha", { required: "true" })} />
+                    <input type="date" className='form-control' defaultValue={formInfo.fechaDeRecoleccion} {...register("fecha", { required: "true" })} />
                     {errors.fecha ? <p className='text-start text-danger mt-1'>Es obligatorio colocar una fecha</p> : ""}
 
                     {
                         tipo == "electronico" ?
                             <div>
                                 <label className='form-label'>¿Necesita tratamiento especial?</label>
-                                <select className='form-control' {...register("datoAdicional", { required: "true" })}>
+                                <select className='form-control'{...register("datoAdicional", { required: "true" })}>
                                     <option value="true">Si</option>
                                     <option value="false">No</option>
                                 </select>
@@ -116,7 +122,7 @@ export default function ModalCreateMaterial({ isOpen, onClose, children }) {
                                 <input type="number" className='form-control' {...register("datoAdicional", { required: "true" })} />
                                 {errors.datoAdicional ? <p className='text-start text-danger mt-1'>Es obligatorio este campo</p> : ""}
                             </div> : tipo == "reciclable" ? <div>
-                                <label className='form-label'>Escribe de que material esta hecho</label>
+                                <label className='form-label'>Escribe de que residuo esta hecho</label>
                                 <input type="text" className='form-control' {...register("datoAdicional", { required: "true" })} />
                                 {errors.datoAdicional ? <p className='text-start text-danger mt-1'>Es obligatorio este campo</p> : ""}
                             </div> : ""
@@ -124,18 +130,18 @@ export default function ModalCreateMaterial({ isOpen, onClose, children }) {
 
 
                     <label className='form-label'>Estado</label>
-                    <select name="" id="" className='form-control' {...register("estado")}>
+                    <select className='form-control' defaultValue={formInfo.estado} {...register("estado")}>
                         <option value="Limpio">Limpio</option>
                         <option value="Contaminado">Contaminado</option>
                     </select>
                     {errors.estado ? <p className='text-start text-danger mt-1'>Es obligatorio seleccionar el estado</p> : ""}
 
                     <label className='form-label'>Peso</label>
-                    <input type="number" className='form-control' {...register("peso", { required: "true" })} />
+                    <input type="number" className='form-control'defaultValue={formInfo.peso} {...register("peso", { required: "true" })} />
                     {errors.peso ? <p className='text-start text-danger mt-1'>Es obligatorio ingresar el peso</p> : ""}
 
                     <label className='form-label'>Destino</label>
-                    <select className='form-control' {...register("destino", { required: "true" })}>
+                    <select className='form-control' defaultValue={formInfo.destino} {...register("destino", { required: "true" })}>
                         <option value="reciclaje">Reciclaje</option>
                         <option value="compostaje">Compostaje</option>
                         <option value="disposicionEspecial">Disposicion especial</option>
@@ -143,7 +149,7 @@ export default function ModalCreateMaterial({ isOpen, onClose, children }) {
                     {errors.destino ? <p className='text-start text-danger mt-1'>Es obligatorio escribir el destino</p> : ""}
 
                     <div className='mt-2 d-flex gap-2 justify-content-end'>
-                        <button className='btn btn-primary' type='submit'>Crear</button>
+                        <button className='btn btn-success' type='submit'>Editar</button>
                         <button className='btn btn-danger' onClick={() => { onClose(); reset(); }}>Cancelar</button>
                     </div>
 
@@ -152,8 +158,4 @@ export default function ModalCreateMaterial({ isOpen, onClose, children }) {
         </>
     )
 }
-{/**protected int vidaUtil;
-   
-    protected double peso;
-    protected String destino;
-    */}
+

@@ -3,7 +3,7 @@ package com.eafit.pensamiento.Herederos;
 import com.eafit.pensamiento.Base.Residuos;
 
 public class Inorganico extends Residuos {
-    boolean Combustible;
+    boolean combustible;
 
 
 
@@ -13,10 +13,10 @@ public class Inorganico extends Residuos {
     }
 
     public boolean isCombustible() {
-        return Combustible;
+        return combustible;
     }
 
     public void setCombustible(boolean combustible) {
-        Combustible = combustible;
+        this.combustible = combustible;
     }
 }

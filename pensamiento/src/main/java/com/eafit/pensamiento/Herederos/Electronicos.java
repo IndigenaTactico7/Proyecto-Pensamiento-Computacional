@@ -3,7 +3,7 @@ package com.eafit.pensamiento.Herederos;
 import com.eafit.pensamiento.Base.Residuos;
 
 public class Electronicos extends com.eafit.pensamiento.Base.Residuos {
-    Boolean NecesitaTratamientoEspecial;
+    Boolean necesitaTratamientoEspecial;
 
     public Electronicos() {
         super.setTipo("electronico");
@@ -11,10 +11,10 @@ public class Electronicos extends com.eafit.pensamiento.Base.Residuos {
     }
 
     public Boolean getNecesitaTratamientoEspecial() {
-        return NecesitaTratamientoEspecial;
+        return necesitaTratamientoEspecial;
     }
 
     public void setNecesitaTratamientoEspecial(Boolean necesitaTratamientoEspecial) {
-        NecesitaTratamientoEspecial = necesitaTratamientoEspecial;
+        this.necesitaTratamientoEspecial = necesitaTratamientoEspecial;
     }
 }
