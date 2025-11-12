@@ -51,48 +51,69 @@ public class Residuos {
         listaDeResiduos.add(residuos);
     }
 
-    public static HashMap<String,Double> devolverPromedio(){
-        HashMap<String,Double> promedios = new HashMap<String,Double>();
+    public static HashMap<String, Double> devolverPromedio() {
+        HashMap<String, Double> promedios = new HashMap<String, Double>();
         double electronico = 0;
         double inorganico = 0;
         double noAprovechable = 0;
         double organico = 0;
         double peligroso = 0;
         double reciclable = 0;
-        int contElectronico = 0,contInorganico = 0,contNoAprov = 0,contOrganico = 0,contPeligroso =0,contReciclable = 0;
-        for (Residuos residuos:listaDeResiduos)
-        {
-            if (residuos.getTipo().equals("electronico")){
-                electronico+=residuos.getPeso();
+        int contElectronico = 0, contInorganico = 0, contNoAprov = 0, contOrganico = 0, contPeligroso = 0, contReciclable = 0;
+        for (Residuos residuos : listaDeResiduos) {
+            if (residuos.getTipo().equals("electronico")) {
+                electronico += residuos.getPeso();
                 contElectronico++;
-            }else if(residuos.getTipo().equals("inorganico")){
-                electronico+=residuos.getPeso();
+            } else if (residuos.getTipo().equals("inorganico")) {
+                inorganico += residuos.getPeso();
                 contInorganico++;
-            }else if(residuos.getTipo().equals("noAprovechable")){
-                electronico+=residuos.getPeso();
+            } else if (residuos.getTipo().equals("noAprovechable")) {
+                noAprovechable += residuos.getPeso();
                 contNoAprov++;
-            }else if(residuos.getTipo().equals("organico")){
-                electronico+=residuos.getPeso();
+            } else if (residuos.getTipo().equals("organico")) {
+                organico += residuos.getPeso();
                 contOrganico++;
-            }else if(residuos.getTipo().equals("peligroso")){
-                electronico+=residuos.getPeso();
+            } else if (residuos.getTipo().equals("peligroso")) {
+                peligroso += residuos.getPeso();
                 contPeligroso++;
-            }else if(residuos.getTipo().equals("reciclable")){
-                electronico+=residuos.getPeso();
+            } else if (residuos.getTipo().equals("reciclable")) {
+                reciclable += residuos.getPeso();
                 contReciclable++;
             }
         }
 
-        promedios.put("electronico",electronico/contElectronico);
-        promedios.put("inorganico",inorganico/contInorganico);
-        promedios.put("noAprovechable",noAprovechable/contNoAprov);
-        promedios.put("organico",organico/contOrganico);
-        promedios.put("peligroso",peligroso/contPeligroso);
-        promedios.put("reciclable",reciclable/contReciclable);
+        promedios.put("electronico", contElectronico != 0 ? electronico / contElectronico : 0.0);
+        promedios.put("inorganico", contInorganico != 0 ? inorganico / contInorganico : 0.0);
+        promedios.put("noAprovechable", contNoAprov != 0 ? noAprovechable / contNoAprov : 0.0);
+        promedios.put("organico", contOrganico != 0 ? organico / contOrganico : 0.0);
+        promedios.put("peligroso", contPeligroso != 0 ? peligroso / contPeligroso : 0.0);
+        promedios.put("reciclable", contReciclable != 0 ? reciclable / contReciclable : 0.0);
 
         return promedios;
     }
+    public static HashMap<String, Double> porcentajes() {
+        HashMap<String, Double> porcentajes = new HashMap<String, Double>();
+        double reciclaje = 0;
+        double compostaje = 0;
+        double disposicionEspecial = 0;
+        int cantidadValores=listaDeResiduos.size();
+        for (Residuos residuos : listaDeResiduos) {
+            if (residuos.getDestino().equals("reciclaje")) {
+                reciclaje++;
 
+            } else if (residuos.getDestino().equals("compostaje")) {
+                compostaje++;
+
+            } else if (residuos.getDestino().equals("disposicionEspecial")) {
+                disposicionEspecial++;
+            }
+        }
+        porcentajes.put("reciclaje", cantidadValores != 0 ? (reciclaje / cantidadValores)*100 : 0.0);
+        porcentajes.put("compostaje", cantidadValores != 0 ? (compostaje / cantidadValores)*100 : 0.0);
+        porcentajes.put("disposicionEspecial", cantidadValores != 0 ? (disposicionEspecial / cantidadValores)*100 : 0.0);
+
+        return porcentajes;
+    }
 
 
     public static ArrayList<Residuos> consultar() {
@@ -100,46 +121,23 @@ public class Residuos {
         return listaDeResiduos;
     }
 
-    public static boolean eliminarResiduo(int idResiduo) throws Exception{
-        try{
+    public static boolean eliminarResiduo(int idResiduo) throws Exception {
+        try {
             listaDeResiduos.remove(idResiduo);
             return true;
-        }catch (Exception error){
+        } catch (Exception error) {
             throw new Exception(error.getMessage());
         }
 
     }
-    public static void editarResiduo(Residuos residuo, int idResiduo) throws Exception{
-        try{
-            listaDeResiduos.set(idResiduo,residuo);
-        }catch (Exception error){
-            throw  new Exception(error.getMessage());
+
+    public static void editarResiduo(Residuos residuo, int idResiduo) throws Exception {
+        try {
+            listaDeResiduos.set(idResiduo, residuo);
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
         }
     }
-
-    public static void guardarReporte( /*Para esta parte de aca si se uso chat gpt para saber como crear el archivo de txt en java*/
-            int total, int reciclados, int reutilizados, int eliminados,
-            double porcReciclado, double porcReutilizado, double porcEliminado,
-            HashMap<String, Double> pesoPorTipo, HashMap<String, Integer> cantidadPorTipo) {
-
-        try (PrintWriter writer = new PrintWriter(new FileWriter("reporte_residuos.txt", true))) {
-            writer.println("Reporte generado el " + LocalDate.now());
-            writer.println("Total residuos recolectados: " + total);
-            writer.printf("Reciclados: %.2f%% (%d)\n", porcReciclado, reciclados);
-            writer.printf("Reutilizados: %.2f%% (%d)\n", porcReutilizado, reutilizados);
-            writer.printf("Eliminados: %.2f%% (%d)\n", porcEliminado, eliminados);
-            writer.println("\nPromedio de peso por tipo de residuo:");
-            for (String tipo : pesoPorTipo.keySet()) {
-                double promedio = pesoPorTipo.get(tipo) / cantidadPorTipo.get(tipo);
-                writer.printf("%s: %.2f kg\n", tipo, promedio);
-            }
-            writer.println("---------------------------------------------");
-            System.out.println("Reporte guardado en 'reporte_residuos.txt'");
-        } catch (Exception e) {
-            System.out.println("Error al guardar el reporte: " + e.getMessage());
-        }
-    }
-
 
 //Metodos get
 

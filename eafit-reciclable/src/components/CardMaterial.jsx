@@ -32,20 +32,20 @@ export default function CardMaterial({ dato, id }) {
 
       <hr className='m-0 mb-2 p-0' />
       <div className='d-flex justify-content-between mt-3 mb-1'>
-        <h2 className='fs-5'>Peso: {peso} kg
+        <h2 className='fs-6'>Peso: {peso} kg
         </h2>
-        <h2 className='fs-5'>Destino: {destino}
+        <h2 className='fs-6'>Destino: {destino}
         </h2>
       </div>
       <div className='d-flex justify-content-between mb-1'>
         {estado == "Limpio" ? <h2 className='fs-6 bg-success text-white rounded-5 p-1'>Estado: {estado} </h2> : <h2 className='fs-6 bg-danger text-white rounded-5 p-1'>Estado: {estado} </h2>}
 
-        <h2 className='fs-5'>Vida util: {vidaUtil}
+        <h2 className='fs-6'>Vida util: {vidaUtil}
         </h2>
       </div>
 
       <div className='d-flex'>
-        <h2 className='fs-5'>Fecha de recoleccion: {fechaDeRecoleccion}
+        <h2 className='fs-6'>Fecha de recoleccion: {fechaDeRecoleccion}
         </h2>
 
       </div>

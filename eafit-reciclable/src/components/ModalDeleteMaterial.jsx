@@ -1,11 +1,12 @@
 import React from 'react'
 import { useModals } from '../context/ModalsContext';
 import axios from 'axios';
+import { usePeticiones } from '../context/PeticionesContext';
 
 export default function ModalDeleteMaterial({ isOpen, onClose}) {
     if (!isOpen) return null;
     let {idCard} = useModals()
-    
+    let {getData,getPromedios,getPorcentajes} = usePeticiones()
     let eliminarResiduo = async (id)=>{
         try{
             let response = await axios.delete(`http://localhost:8080/residuo/${id}`,{
@@ -13,7 +14,12 @@ export default function ModalDeleteMaterial({ isOpen, onClose}) {
                     "Content-Type": "application/json"
                 }    
             })
-
+            if (response.status==200){
+                getData()
+                getPromedios()
+                getPorcentajes()
+                onClose()
+            }
             console.log(response);
         }catch(error){
             console.log(error.message);

@@ -3,13 +3,14 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom';
 import { useModals } from '../context/ModalsContext';
+import { usePeticiones } from '../context/PeticionesContext';
+
 
 export default function ModalEditMaterial({ isOpen, onClose }) {
     let { register, handleSubmit, formState: { errors }, unregister, setValue, reset } = useForm()
     let [tipo, setTipo] = useState("electronico")
-
+    let {getData,getPromedios,getPorcentajes} = usePeticiones()
     let { idCard, formInfo } = useModals()
-    console.log(formInfo);
 
     if (!isOpen) return null;
 
@@ -56,6 +57,9 @@ export default function ModalEditMaterial({ isOpen, onClose }) {
             if (response.status == 200) {
                 onClose()
                 reset()
+                getData()
+                getPromedios()
+                getPorcentajes()
             }
         } catch (error) {
             console.log(error.message);
@@ -150,7 +154,7 @@ export default function ModalEditMaterial({ isOpen, onClose }) {
 
                     <div className='mt-2 d-flex gap-2 justify-content-end'>
                         <button className='btn btn-success' type='submit'>Editar</button>
-                        <button className='btn btn-danger' onClick={() => { onClose(); reset(); }}>Cancelar</button>
+                        <button className='btn btn-danger' type='button' onClick={() => { onClose(); reset(); }}>Cancelar</button>
                     </div>
 
                 </form>

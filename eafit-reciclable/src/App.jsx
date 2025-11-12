@@ -3,29 +3,20 @@ import MainPage from './pages/MainPage';
 import axios from 'axios';
 import '../src/App.css'
 import ModalsProvider from './context/ModalsContext';
+import PeticionesProvider, { PeticionesContext } from './context/PeticionesContext';
 
 
 function App() {
- 
-  let promedios = async ()=>{
-    try{
-      let response = await axios.get("http://localhost:8080/residuo/promedio")
-      console.log(response.data);
-    }catch(error){
-      console.log(error.message);
-    }
-  }
-
-  useEffect(()=>{
-    promedios()
-  },[])
 
   return (
     <>
-    <ModalsProvider>
-       <MainPage/>
-    </ModalsProvider>
-   
+      <PeticionesProvider>
+        <ModalsProvider>
+          <MainPage />
+        </ModalsProvider>
+      </PeticionesProvider>
+
+
     </>
   )
 }

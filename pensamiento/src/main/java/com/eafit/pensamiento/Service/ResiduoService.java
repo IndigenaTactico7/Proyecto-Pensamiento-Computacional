@@ -36,6 +36,14 @@ public class ResiduoService {
             throw new Exception(error.getMessage());
         }
     }
+    public HashMap<String,Double> porcentajes()throws Exception
+    {
+        try{
+            return Residuos.porcentajes();
+        }catch (Exception error){
+            throw new Exception(error.getMessage());
+        }
+    }
 
     public Boolean eliminarResido(int idResiduo)throws Exception
     {

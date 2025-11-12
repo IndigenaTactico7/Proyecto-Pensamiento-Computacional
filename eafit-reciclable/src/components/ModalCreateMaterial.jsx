@@ -2,10 +2,12 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom';
+import { usePeticiones } from '../context/PeticionesContext';
 
 export default function ModalCreateMaterial({ isOpen, onClose, children }) {
     let { register, handleSubmit, formState: { errors }, unregister, setValue, reset } = useForm()
     let [tipo, setTipo] = useState("electronico")
+    let {getData,getPromedios,getPorcentajes} = usePeticiones()
     if (!isOpen) return null;
 
     let CreateMaterial = async (e) => {
@@ -49,6 +51,9 @@ export default function ModalCreateMaterial({ isOpen, onClose, children }) {
                 }
             })
             if (response.status == 200) {
+                getData()
+                getPromedios()
+                getPorcentajes()
                 onClose()
                 reset()
             }
@@ -144,7 +149,7 @@ export default function ModalCreateMaterial({ isOpen, onClose, children }) {
 
                     <div className='mt-2 d-flex gap-2 justify-content-end'>
                         <button className='btn btn-primary' type='submit'>Crear</button>
-                        <button className='btn btn-danger' onClick={() => { onClose(); reset(); }}>Cancelar</button>
+                        <button className='btn btn-danger' type='button' onClick={() => { onClose(); reset(); }}>Cancelar</button>
                     </div>
 
                 </form>

@@ -38,6 +38,15 @@ public class Controller {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+    @GetMapping("/porcentaje")
+    public ResponseEntity<?> porcentajes() throws Exception {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(Residuo.porcentajes());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
     @DeleteMapping("/{idEliminar}")
     public ResponseEntity<?> eliminar(@PathVariable int idEliminar) throws Exception{
         try{
